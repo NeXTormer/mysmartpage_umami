@@ -13,6 +13,8 @@ export interface MetricCardProps {
   formatValue?: (n: any) => string;
   showLabel?: boolean;
   showChange?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 export const MetricCard = ({
@@ -23,6 +25,8 @@ export const MetricCard = ({
   formatValue = formatNumber,
   showLabel = true,
   showChange = false,
+  className,
+  style,
 }: MetricCardProps) => {
   const diff = value - change;
   const pct = ((value - diff) / diff) * 100;
@@ -37,6 +41,8 @@ export const MetricCard = ({
       borderRadius="3"
       backgroundColor
       border
+      className={className}
+      style={style}
     >
       {showLabel && (
         <Text weight="bold" wrap="nowrap">

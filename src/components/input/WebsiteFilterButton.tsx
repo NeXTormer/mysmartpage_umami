@@ -6,10 +6,12 @@ import { filtersArrayToObject } from '@/lib/params';
 
 export function WebsiteFilterButton({
   websiteId,
+  style,
 }: {
   websiteId: string;
   position?: 'bottom' | 'top' | 'left' | 'right';
   alignment?: 'end' | 'center' | 'start';
+  style?: React.CSSProperties;
 }) {
   const { formatMessage, labels } = useMessages();
   const { updateParams, router } = useNavigation();
@@ -23,7 +25,12 @@ export function WebsiteFilterButton({
   };
 
   return (
-    <DialogButton icon={<ListFilter />} label={formatMessage(labels.filter)} variant="outline">
+    <DialogButton
+      icon={<ListFilter />}
+      label={formatMessage(labels.filter)}
+      variant="outline"
+      style={style}
+    >
       {({ close }) => {
         return <FilterEditForm websiteId={websiteId} onChange={handleChange} onClose={close} />;
       }}

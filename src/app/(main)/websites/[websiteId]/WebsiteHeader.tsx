@@ -8,7 +8,17 @@ import { useMessages, useNavigation, useWebsite } from '@/components/hooks';
 import { LinkButton } from '@/components/common/LinkButton';
 import { DialogButton } from '@/components/input/DialogButton';
 
-export function WebsiteHeader({ showActions }: { showActions?: boolean }) {
+export function WebsiteHeader({
+  showActions,
+  showTitle = true,
+  showBorder = true,
+  marginBottom = '3',
+}: {
+  showActions?: boolean;
+  showTitle?: boolean;
+  showBorder?: boolean;
+  marginBottom?: string;
+}) {
   const website = useWebsite();
   const { renderUrl, pathname } = useNavigation();
   const isSettings = pathname.endsWith('/settings');
@@ -18,7 +28,12 @@ export function WebsiteHeader({ showActions }: { showActions?: boolean }) {
   }
 
   return (
-    <PageHeader title={website.name} icon={<Favicon domain={website.domain} />} marginBottom="3">
+    <PageHeader
+      title={showTitle ? website.name : undefined}
+      icon={showTitle ? <Favicon domain={website.domain} /> : undefined}
+      marginBottom={marginBottom}
+      showBorder={showBorder}
+    >
       <Row alignItems="center" gap="6" wrap="wrap">
         <ActiveUsers websiteId={website.id} />
 

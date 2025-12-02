@@ -20,43 +20,43 @@ export function WebsiteMetricsBar({
 
   const metrics = data
     ? [
-        {
-          value: visitors,
-          label: formatMessage(labels.visitors),
-          change: visitors - comparison.visitors,
-          formatValue: formatLongNumber,
-        },
-        {
-          value: visits,
-          label: formatMessage(labels.visits),
-          change: visits - comparison.visits,
-          formatValue: formatLongNumber,
-        },
-        {
-          value: pageviews,
-          label: formatMessage(labels.views),
-          change: pageviews - comparison.pageviews,
-          formatValue: formatLongNumber,
-        },
-        {
-          label: formatMessage(labels.bounceRate),
-          value: (Math.min(visits, bounces) / visits) * 100,
-          prev: (Math.min(comparison.visits, comparison.bounces) / comparison.visits) * 100,
-          change:
-            (Math.min(visits, bounces) / visits) * 100 -
-            (Math.min(comparison.visits, comparison.bounces) / comparison.visits) * 100,
-          formatValue: n => Math.round(+n) + '%',
-          reverseColors: true,
-        },
-        {
-          label: formatMessage(labels.visitDuration),
-          value: totaltime / visits,
-          prev: comparison.totaltime / comparison.visits,
-          change: totaltime / visits - comparison.totaltime / comparison.visits,
-          formatValue: n =>
-            `${+n < 0 ? '-' : ''}${formatShortTime(Math.abs(~~n), ['m', 's'], ' ')}`,
-        },
-      ]
+      {
+        value: visitors,
+        label: formatMessage(labels.visitors),
+        change: visitors - comparison.visitors,
+        formatValue: formatLongNumber,
+      },
+      {
+        value: visits,
+        label: formatMessage(labels.visits),
+        change: visits - comparison.visits,
+        formatValue: formatLongNumber,
+      },
+      {
+        value: pageviews,
+        label: formatMessage(labels.views),
+        change: pageviews - comparison.pageviews,
+        formatValue: formatLongNumber,
+      },
+      {
+        label: formatMessage(labels.bounceRate),
+        value: (Math.min(visits, bounces) / visits) * 100,
+        prev: (Math.min(comparison.visits, comparison.bounces) / comparison.visits) * 100,
+        change:
+          (Math.min(visits, bounces) / visits) * 100 -
+          (Math.min(comparison.visits, comparison.bounces) / comparison.visits) * 100,
+        formatValue: n => Math.round(+n) + '%',
+        reverseColors: true,
+      },
+      {
+        label: formatMessage(labels.visitDuration),
+        value: totaltime / visits,
+        prev: comparison.totaltime / comparison.visits,
+        change: totaltime / visits - comparison.totaltime / comparison.visits,
+        formatValue: n =>
+          `${+n < 0 ? '-' : ''}${formatShortTime(Math.abs(~~n), ['m', 's'], ' ')}`,
+      },
+    ]
     : null;
 
   return (
@@ -79,6 +79,10 @@ export function WebsiteMetricsBar({
               formatValue={formatValue}
               reverseColors={reverseColors}
               showChange={!isAllTime}
+              style={{
+                backgroundColor: '#ffffff',
+                ['--background-color' as any]: '#ffffff',
+              }}
             />
           );
         })}

@@ -12,6 +12,7 @@ export interface WebsiteDateFilterProps {
   showAllTime?: boolean;
   showButtons?: boolean;
   allowCompare?: boolean;
+  style?: React.CSSProperties;
 }
 
 export function WebsiteDateFilter({
@@ -19,6 +20,7 @@ export function WebsiteDateFilter({
   showAllTime = true,
   showButtons = true,
   allowCompare,
+  style,
 }: WebsiteDateFilterProps) {
   const { dateRange, isAllTime, isCustomRange } = useDateRange();
   const { formatMessage, labels } = useMessages();
@@ -66,12 +68,17 @@ export function WebsiteDateFilter({
     <Row wrap="wrap" gap>
       {showButtons && !isAllTime && !isCustomRange && (
         <Row gap="1">
-          <Button onPress={() => handleIncrement(-1)} variant="outline">
+          <Button onPress={() => handleIncrement(-1)} variant="outline" style={style}>
             <Icon rotate={180}>
               <ChevronRight />
             </Icon>
           </Button>
-          <Button onPress={() => handleIncrement(1)} variant="outline" isDisabled={disableForward}>
+          <Button
+            onPress={() => handleIncrement(1)}
+            variant="outline"
+            isDisabled={disableForward}
+            style={style}
+          >
             <Icon>
               <ChevronRight />
             </Icon>
@@ -84,6 +91,7 @@ export function WebsiteDateFilter({
           onChange={handleChange}
           showAllTime={showAllTime}
           renderDate={+offset !== 0}
+          style={style}
         />
       </Row>
       {showCompare && (

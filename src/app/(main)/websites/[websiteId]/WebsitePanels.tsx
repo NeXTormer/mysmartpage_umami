@@ -9,7 +9,6 @@ import { Grid, Heading, Row, Tab, TabList, TabPanel, Tabs } from '@umami/react-z
 
 export function WebsitePanels({ websiteId }: { websiteId: string }) {
   const { formatMessage, labels } = useMessages();
-  const { pathname } = useNavigation();
   const tableProps = {
     websiteId,
     limit: 10,
@@ -18,12 +17,18 @@ export function WebsitePanels({ websiteId }: { websiteId: string }) {
     metric: formatMessage(labels.visitors),
   };
   const rowProps = { minHeight: '570px' };
+
+  const panelProps = {
+    style: { backgroundColor: '#ffffff' },
+  };
+
+  const { pathname } = useNavigation();
   const isSharePage = pathname.includes('/share/');
 
   return (
     <Grid gap="3">
       <GridRow layout="two" {...rowProps}>
-        <Panel>
+        <Panel {...panelProps}>
           <Heading size="2">{formatMessage(labels.pages)}</Heading>
           <Tabs>
             <TabList>
@@ -42,7 +47,7 @@ export function WebsitePanels({ websiteId }: { websiteId: string }) {
             </TabPanel>
           </Tabs>
         </Panel>
-        <Panel>
+        <Panel {...panelProps}>
           <Heading size="2">{formatMessage(labels.sources)}</Heading>
           <Tabs>
             <TabList>
@@ -64,7 +69,7 @@ export function WebsitePanels({ websiteId }: { websiteId: string }) {
       </GridRow>
 
       <GridRow layout="two" {...rowProps}>
-        <Panel>
+        <Panel {...panelProps}>
           <Heading size="2">{formatMessage(labels.environment)}</Heading>
           <Tabs>
             <TabList>
@@ -84,7 +89,7 @@ export function WebsitePanels({ websiteId }: { websiteId: string }) {
           </Tabs>
         </Panel>
 
-        <Panel>
+        <Panel {...panelProps}>
           <Heading size="2">{formatMessage(labels.location)}</Heading>
           <Tabs>
             <TabList>
@@ -106,11 +111,16 @@ export function WebsitePanels({ websiteId }: { websiteId: string }) {
       </GridRow>
 
       <GridRow layout="two-one" {...rowProps}>
-        <Panel gridColumn={{ xs: 'span 1', md: 'span 2' }} paddingX="0" paddingY="0">
+        <Panel
+          gridColumn={{ xs: 'span 1', md: 'span 2' }}
+          paddingX="0"
+          paddingY="0"
+          {...panelProps}
+        >
           <WorldMap websiteId={websiteId} />
         </Panel>
 
-        <Panel>
+        <Panel {...panelProps}>
           <Heading size="2">{formatMessage(labels.traffic)}</Heading>
           <Row border="bottom" marginBottom="4" />
           <WeeklyTraffic websiteId={websiteId} />
@@ -118,7 +128,7 @@ export function WebsitePanels({ websiteId }: { websiteId: string }) {
       </GridRow>
       {isSharePage && (
         <GridRow layout="two-one" {...rowProps}>
-          <Panel>
+          <Panel {...panelProps}>
             <Heading size="2">{formatMessage(labels.events)}</Heading>
             <Row border="bottom" marginBottom="4" />
             <MetricsTable
@@ -130,7 +140,7 @@ export function WebsitePanels({ websiteId }: { websiteId: string }) {
               filterLink={false}
             />
           </Panel>
-          <Panel gridColumn={{ xs: 'span 1', md: 'span 2' }}>
+          <Panel gridColumn={{ xs: 'span 1', md: 'span 2' }} {...panelProps}>
             <EventsChart websiteId={websiteId} />
           </Panel>
         </GridRow>

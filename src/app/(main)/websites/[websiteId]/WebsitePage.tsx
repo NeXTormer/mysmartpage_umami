@@ -12,7 +12,7 @@ export function WebsitePage({ websiteId }: { websiteId: string }) {
     <Column gap>
       <WebsiteControls websiteId={websiteId} />
       <WebsiteMetricsBar websiteId={websiteId} showChange={true} />
-      <Panel minHeight="520px">
+      <Panel minHeight="520px" style={{ backgroundColor: '#ffffff' }}>
         <WebsiteChart websiteId={websiteId} />
       </Panel>
       <WebsitePanels websiteId={websiteId} />

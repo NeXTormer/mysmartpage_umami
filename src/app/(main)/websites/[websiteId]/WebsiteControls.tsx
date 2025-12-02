@@ -20,15 +20,29 @@ export function WebsiteControls({
   allowDownload?: boolean;
   allowCompare?: boolean;
 }) {
+  const buttonStyle = {
+    backgroundColor: '#ffffff',
+    '--background-color': '#ffffff',
+    '--base-color-2': '#ffffff',
+  } as React.CSSProperties;
+
   return (
     <Column gap>
       <Grid columns={{ xs: '1fr', md: 'auto 1fr' }} gap>
         <Row alignItems="center" justifyContent="flex-start">
-          {allowFilter ? <WebsiteFilterButton websiteId={websiteId} /> : <div />}
+          {allowFilter ? (
+            <WebsiteFilterButton websiteId={websiteId} style={buttonStyle} />
+          ) : (
+            <div />
+          )}
         </Row>
         <Row alignItems="center" justifyContent={{ xs: 'flex-start', md: 'flex-end' }}>
           {allowDateFilter && (
-            <WebsiteDateFilter websiteId={websiteId} allowCompare={allowCompare} />
+            <WebsiteDateFilter
+              websiteId={websiteId}
+              allowCompare={allowCompare}
+              style={buttonStyle}
+            />
           )}
           {allowDownload && <ExportButton websiteId={websiteId} />}
           {allowMonthFilter && <MonthFilter />}

@@ -12,6 +12,7 @@ export interface DateFilterProps extends SelectProps {
   showAllTime?: boolean;
   renderDate?: boolean;
   placement?: any;
+  style?: React.CSSProperties;
 }
 
 export function DateFilter({
@@ -20,6 +21,7 @@ export function DateFilter({
   showAllTime,
   renderDate,
   placement = 'bottom',
+  style,
   ...props
 }: DateFilterProps) {
   const { formatMessage, labels } = useMessages();
@@ -110,8 +112,9 @@ export function DateFilter({
         placeholder={formatMessage(labels.selectDate)}
         onChange={handleChange}
         renderValue={renderValue}
-        popoverProps={{ placement }}
+        popoverProps={{ placement, style }}
         isFullscreen={isMobile}
+        style={style}
       >
         {options.map(({ label, value, divider }: any) => {
           return (

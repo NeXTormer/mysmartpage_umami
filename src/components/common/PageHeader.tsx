@@ -7,6 +7,7 @@ export function PageHeader({
   label,
   icon,
   showBorder = true,
+  marginBottom = '6',
   children,
 }: {
   title: string;
@@ -16,13 +17,14 @@ export function PageHeader({
   showBorder?: boolean;
   allowEdit?: boolean;
   className?: string;
+  marginBottom?: string;
   children?: ReactNode;
 }) {
   return (
     <Grid
       columns={{ xs: '1fr', md: '1fr 1fr' }}
       paddingY="6"
-      marginBottom="6"
+      marginBottom={marginBottom}
       border={showBorder ? 'bottom' : undefined}
     >
       <Column gap="2">

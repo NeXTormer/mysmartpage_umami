@@ -1,4 +1,33 @@
-html body {
-  --primary-color: #147af3;
-  --primary-font-color: var(--light-color);
+:root {
+  /* Main Colors */
+  --primary-color: #494873; /* mainColor */
+  --primary-font-color: #FFFFFF; /* mainColorInText / textColorBright */
+  --accent-color: #8C0001; /* accentColor */
+  --accent-color-light: #F4F7FE; /* accentColorLight */
+
+  /* Status Colors */
+  --positive-color: #1CBB3F; /* positiveColor */
+  --positive-color-light: rgba(28, 187, 63, 0.1); /* positiveColorLight */
+  --negative-color: #F44336; /* negativeColor (Colors.red) */
+  --negative-color-light: rgba(183, 28, 28, 0.1); /* negativeColorLight */
+
+  /* Backgrounds & UI */
+  --background-color: #E5E5F4; /* backgroundColor */
+  --card-background-color: #FFFFFF; /* cardBackgroundColor */
+  --card-border-color: #E2E2E2; /* cardBorderColor */
+  --divider-color: #C9C9C9; /* dividerColor */
+
+  /* Text Colors */
+  --font-color: #1A1E23; /* textColor */
+  --font-color-bright: #FFFFFF; /* textColorBright */
+  --grey-text-color: rgba(58, 58, 58, 0.75); /* greyTextColor */
+
+  /* Greys */
+  --grey-color: #C4C4C4; /* greyColor */
+  --disabled-grey-color: rgba(165, 165, 165, 0.4); /* disabledGreyColor */
+
+  /* Overrides for existing variables observed in global.css */
+  --base-color-2: var(--background-color);
+  --base-color-4: var(--disabled-grey-color);
+  --base-color-9: var(--primary-color);
 }

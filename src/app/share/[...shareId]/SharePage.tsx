@@ -18,9 +18,13 @@ export function SharePage({ shareId }) {
   return (
     <Column backgroundColor="2">
       <PageBody gap>
-        <Header />
         <WebsiteProvider websiteId={shareToken.websiteId}>
-          <WebsiteHeader showActions={false} />
+          <WebsiteHeader
+            showActions={false}
+            showTitle={false}
+            showBorder={false}
+            marginBottom="0"
+          />
           <WebsitePage websiteId={shareToken.websiteId} />
         </WebsiteProvider>
         <Footer />
