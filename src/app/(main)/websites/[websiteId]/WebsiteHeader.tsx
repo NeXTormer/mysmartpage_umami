@@ -1,12 +1,12 @@
-import { Icon, Text, Row } from '@umami/react-zen';
-import { PageHeader } from '@/components/common/PageHeader';
-import { Share, Edit } from '@/components/icons';
-import { Favicon } from '@/components/common/Favicon';
-import { ActiveUsers } from '@/components/metrics/ActiveUsers';
+import { Icon, Row, Text } from '@umami/react-zen';
 import { WebsiteShareForm } from '@/app/(main)/websites/[websiteId]/settings/WebsiteShareForm';
-import { useMessages, useNavigation, useWebsite } from '@/components/hooks';
+import { Favicon } from '@/components/common/Favicon';
 import { LinkButton } from '@/components/common/LinkButton';
+import { PageHeader } from '@/components/common/PageHeader';
+import { useMessages, useNavigation, useWebsite } from '@/components/hooks';
+import { Edit, Share } from '@/components/icons';
 import { DialogButton } from '@/components/input/DialogButton';
+import { ActiveUsers } from '@/components/metrics/ActiveUsers';
 
 export function WebsiteHeader({
   showActions,
@@ -23,16 +23,17 @@ export function WebsiteHeader({
   const { renderUrl, pathname } = useNavigation();
   const isSettings = pathname.endsWith('/settings');
 
+  const { formatMessage, labels } = useMessages();
+
   if (isSettings) {
     return null;
   }
 
   return (
     <PageHeader
-      title={showTitle ? website.name : undefined}
-      icon={showTitle ? <Favicon domain={website.domain} /> : undefined}
-      marginBottom={marginBottom}
-      showBorder={showBorder}
+      title={website.name}
+      icon={<Favicon domain={website.domain} />}
+      titleHref={renderUrl(`/websites/${website.id}`, false)}
     >
       <Row alignItems="center" gap="6" wrap="wrap">
         <ActiveUsers websiteId={website.id} />
@@ -44,7 +45,7 @@ export function WebsiteHeader({
               <Icon>
                 <Edit />
               </Icon>
-              <Text>Edit</Text>
+              <Text>{formatMessage(labels.edit)}</Text>
             </LinkButton>
           </Row>
         )}
