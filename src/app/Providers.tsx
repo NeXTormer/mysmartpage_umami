@@ -1,6 +1,6 @@
 'use client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { RouterProvider, ZenProvider } from '@umami/react-zen';
+import { RouterProvider, ZenProvider, useTheme } from '@umami/react-zen';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { IntlProvider } from 'react-intl';
@@ -31,6 +31,21 @@ function MessagesProvider({ children }) {
       {children}
     </IntlProvider>
   );
+  return (
+    <IntlProvider locale={locale} messages={messages[locale]} onError={() => null}>
+      {children}
+    </IntlProvider>
+  );
+}
+
+function ForceLightMode() {
+  const { setTheme } = useTheme();
+
+  useEffect(() => {
+    setTheme('light');
+  }, [setTheme]);
+
+  return null;
 }
 
 export function Providers({ children }) {
@@ -50,6 +65,7 @@ export function Providers({ children }) {
 
   return (
     <ZenProvider>
+      <ForceLightMode />
       <RouterProvider navigate={navigate}>
         <MessagesProvider>
           <QueryClientProvider client={client}>
