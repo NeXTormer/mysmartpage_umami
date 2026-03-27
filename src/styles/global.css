@@ -1,11 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
 html,
 body {
-  font-family: var(--font-family), sans-serif;
-  color: var(--font-color);
+  font-family: 'Space Grotesk', var(--font-family), sans-serif !important;
+  color: var(--font-color) !important;
   font-size: var(--font-size);
-  background-color: var(--base-color-2);
+  background-color: var(--base-color-2) !important;
   width: 100%;
   min-height: 100vh;
+}
+
+* {
+  border-radius: 0 !important;
+  font-family: 'Space Grotesk', sans-serif !important;
+}
+
+div[class*="card"], div[class*="Card"], div[class*="box"], div[class*="Box"], button, input, select, textarea, div[class*="vars_border__"] {
+  border: 2px solid #000000 !important;
+  box-shadow: 4px 4px 0px 0px rgba(0,0,0,1) !important;
+  border-radius: 0 !important;
 }
 
 html[style*="padding-right"] {

@@ -6,8 +6,6 @@ import { WebsitePage } from '@/app/(main)/websites/[websiteId]/WebsitePage';
 import { WebsiteProvider } from '@/app/(main)/websites/WebsiteProvider';
 import { PageBody } from '@/components/common/PageBody';
 import { useShareTokenQuery } from '@/components/hooks';
-import { Footer } from './Footer';
-import { Header } from './Header';
 
 export function SharePage({ shareId }) {
   const { shareToken, isLoading } = useShareTokenQuery(shareId);
@@ -38,7 +36,6 @@ export function SharePage({ shareId }) {
           />
           <WebsitePage websiteId={shareToken.websiteId} />
         </WebsiteProvider>
-        <Footer />
       </PageBody>
     </Column>
   );

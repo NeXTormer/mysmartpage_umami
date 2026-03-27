@@ -31,12 +31,14 @@ export function WebsiteHeader({
 
   return (
     <PageHeader
-      title={website.name}
-      icon={<Favicon domain={website.domain} />}
-      titleHref={renderUrl(`/websites/${website.id}`, false)}
+      title={showTitle ? website.name : undefined}
+      icon={showTitle ? <Favicon domain={website.domain} /> : undefined}
+      titleHref={showTitle ? renderUrl(`/websites/${website.id}`, false) : undefined}
+      showBorder={showBorder}
+      marginBottom={marginBottom}
     >
       <Row alignItems="center" gap="6" wrap="wrap">
-        <ActiveUsers websiteId={website.id} />
+        {showTitle && <ActiveUsers websiteId={website.id} />}
 
         {showActions && (
           <Row alignItems="center" gap>
