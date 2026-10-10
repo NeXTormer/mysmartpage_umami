@@ -1,0 +1,91 @@
+/*
+ * Share page styling, matched to numi-web (soft NUMI look) instead of the
+ * app-wide neo-brutalist theme from styles/global.css. Everything is scoped
+ * to .numi-share so the logged-in analytics UI is unaffected.
+ * Tokens mirror numi-web/src/app.css.
+ */
+.numi-share {
+  --numi-brand: #0047ff;
+  --numi-ink: #0f172a;
+  --numi-muted: #5b6579;
+  --numi-line: #e6eaf2;
+  --numi-alt: #f6f8fc;
+  --numi-radius-card: 20px;
+  --numi-shadow-card: 0 8px 20px -12px rgba(15, 23, 42, 0.22);
+
+  --font-color: var(--numi-ink);
+  --grey-text-color: var(--numi-muted);
+  --card-border-color: var(--numi-line);
+  --divider-color: var(--numi-line);
+
+  min-height: 100vh;
+  background-color: var(--numi-alt);
+  color: var(--numi-ink);
+}
+
+/* Body text uses the platform font; Space Grotesk stays on headings/brand. */
+.numi-share,
+.numi-share * {
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif !important;
+}
+
+.numi-share h1,
+.numi-share h2,
+.numi-share h3,
+.numi-share h4,
+.numi-share h5,
+.numi-share h6 {
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif !important;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* Cards and panels: white, 1px line border, 20px radius, soft shadow. */
+.numi-share div[class*='card'],
+.numi-share div[class*='Card'],
+.numi-share div[class*='box'],
+.numi-share div[class*='Box'],
+.numi-share div[class*='vars_border__'] {
+  border: 1px solid var(--numi-line) !important;
+  border-radius: var(--numi-radius-card) !important;
+  box-shadow: var(--numi-shadow-card) !important;
+  background-color: #fff;
+}
+
+/* Controls: 12px radius, line border, no hard shadow. */
+.numi-share button,
+.numi-share input,
+.numi-share select,
+.numi-share textarea {
+  border: 1px solid var(--numi-line) !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+
+.numi-share button:hover {
+  border-color: var(--numi-brand) !important;
+}
+
+.numi-share button:focus-visible,
+.numi-share input:focus-visible,
+.numi-share select:focus-visible {
+  outline: none;
+  border-color: var(--numi-brand) !important;
+  box-shadow: 0 0 0 4px rgba(0, 71, 255, 0.1) !important;
+}
+
+/* The global `* { border-radius: 0 }` also flattens tables, bars and pills;
+   restore rounding on the small shapes. */
+.numi-share [class*='badge'],
+.numi-share [class*='Badge'],
+.numi-share [class*='tag'],
+.numi-share [class*='Tag'] {
+  border-radius: 99px !important;
+}
+
+.numi-share ::-webkit-scrollbar-thumb {
+  background-color: var(--numi-line);
+  border-radius: 99px !important;
+}

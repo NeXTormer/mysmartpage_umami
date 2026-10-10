@@ -6,6 +6,7 @@ import { WebsitePage } from '@/app/(main)/websites/[websiteId]/WebsitePage';
 import { WebsiteProvider } from '@/app/(main)/websites/WebsiteProvider';
 import { PageBody } from '@/components/common/PageBody';
 import { useShareTokenQuery } from '@/components/hooks';
+import './share.css';
 
 export function SharePage({ shareId }) {
   const { shareToken, isLoading } = useShareTokenQuery(shareId);
@@ -25,7 +26,7 @@ export function SharePage({ shareId }) {
   }
 
   return (
-    <Column backgroundColor="2">
+    <Column backgroundColor="2" className="numi-share">
       <PageBody gap>
         <WebsiteProvider websiteId={shareToken.websiteId}>
           <WebsiteHeader
