@@ -119,25 +119,17 @@ select:is(:-webkit-autofill, :autofill):focus {
   }
 }
 
-/* NUMI neobrutalist theme */
-* {
+/* NUMI neobrutalist theme (switched off on share pages, see share/share.css) */
+html:not(:has(.numi-share)) * {
   border-radius: 0 !important;
   font-family: 'Space Grotesk', sans-serif;
 }
 
-button,
-input,
-select,
-textarea,
-[class*="card" i],
-[class*="panel" i] {
+html:not(:has(.numi-share)) :is(button, input, select, textarea, [class*="card" i], [class*="panel" i]) {
   border-color: #000000 !important;
 }
 
-button,
-input,
-select,
-textarea {
+html:not(:has(.numi-share)) :is(button, input, select, textarea) {
   border-width: 2px !important;
   box-shadow: 4px 4px 0 0 #000000 !important;
 }

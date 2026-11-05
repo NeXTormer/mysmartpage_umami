@@ -56,7 +56,10 @@ export function getColor(seed: string, min: number = 0, max: number = 255) {
 }
 
 export function getThemeColors(theme: string) {
-  const { primary, text, line, fill } = THEME_COLORS[theme];
+  const { primary, text, fill } = THEME_COLORS[theme];
+  // Share pages use numi-web's soft look: light grid lines instead of black.
+  const isShare = typeof window !== 'undefined' && window.location.pathname.startsWith('/share/');
+  const line = isShare ? '#e6eaf2' : THEME_COLORS[theme].line;
   const primaryColor = colord(THEME_COLORS[theme].primary);
 
   return {

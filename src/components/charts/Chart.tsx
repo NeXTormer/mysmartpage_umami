@@ -15,7 +15,11 @@ import { Legend } from '@/components/metrics/Legend';
 import { getChartBucketIndex } from '@/lib/charts';
 import { DEFAULT_ANIMATION_DURATION } from '@/lib/constants';
 
-ChartJS.defaults.font.family = 'Space Grotesk';
+// Share pages use the platform font (numi-web look); the app uses Space Grotesk.
+ChartJS.defaults.font.family =
+  typeof window !== 'undefined' && window.location.pathname.startsWith('/share/')
+    ? 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif'
+    : 'Space Grotesk';
 
 export interface ChartProps extends BoxProps {
   type?: 'bar' | 'bubble' | 'doughnut' | 'pie' | 'line' | 'polarArea' | 'radar' | 'scatter';

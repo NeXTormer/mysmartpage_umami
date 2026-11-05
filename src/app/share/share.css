@@ -1,0 +1,100 @@
+/*
+ * Share page styling, matched to numi-web's soft NUMI look instead of the
+ * app-wide neobrutalist theme in global.css. Everything is scoped to
+ * .numi-share (set in share/[slug]/layout.tsx); global.css switches its
+ * neobrutalist rules off whenever a .numi-share element is on the page.
+ * Tokens mirror numi-web/src/app.css.
+ */
+@font-face {
+  font-family: 'Martian Grotesk';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url('/fonts/martian-grotesk.woff2') format('woff2');
+}
+
+html:has(.numi-share),
+html:has(.numi-share) body {
+  background-color: #f6f8fc;
+}
+
+.numi-share {
+  --numi-brand: #0047ff;
+  --numi-brand-soft: #eaf0ff;
+  --numi-ink: #0f172a;
+  --numi-muted: #5b6579;
+  --numi-line: #e6eaf2;
+  --numi-alt: #f6f8fc;
+  --numi-radius-card: 20px;
+  --numi-radius-control: 12px;
+  --numi-shadow-card: 0 8px 20px -12px rgba(15, 23, 42, 0.22);
+
+  /* Re-point React Zen's tokens at the NUMI palette. */
+  --zen-font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
+  --zen-primary: var(--numi-brand);
+  --zen-primary-fg: #ffffff;
+  --zen-fg: var(--numi-ink);
+  --zen-fg-muted: var(--numi-muted);
+  --zen-border: var(--numi-line);
+  --zen-border-muted: var(--numi-line);
+  --zen-border-strong: #cfd6e4;
+  --zen-surface: #ffffff;
+  --zen-surface-raised: #ffffff;
+  --zen-surface-sunken: var(--numi-alt);
+  --zen-radius: var(--numi-radius-control);
+  --zen-focus-ring: var(--numi-brand);
+
+  min-height: 100vh;
+  background-color: var(--numi-alt);
+  color: var(--numi-ink);
+  font-family: var(--zen-font-family);
+  -webkit-font-smoothing: antialiased;
+}
+
+.numi-share h1,
+.numi-share h2,
+.numi-share h3,
+.numi-share h4,
+.numi-share h5,
+.numi-share h6 {
+  font-family: 'Martian Grotesk', ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* Cards and panels: white, 1px line border, 20px radius, soft shadow. */
+.numi-share [class*='panel' i],
+.numi-share [class*='card' i] {
+  background-color: #ffffff;
+  border: 1px solid var(--numi-line);
+  border-radius: var(--numi-radius-card);
+  box-shadow: var(--numi-shadow-card);
+}
+
+/* Controls: 12px radius, line border, no hard shadow. */
+.numi-share button,
+.numi-share input,
+.numi-share select,
+.numi-share textarea {
+  border-radius: var(--numi-radius-control);
+  box-shadow: none;
+}
+
+.numi-share button:hover {
+  border-color: var(--numi-brand);
+}
+
+.numi-share button:focus-visible,
+.numi-share input:focus-visible,
+.numi-share select:focus-visible {
+  outline: none;
+  border-color: var(--numi-brand);
+  box-shadow: 0 0 0 4px rgba(0, 71, 255, 0.1);
+}
+
+.numi-share ::-webkit-scrollbar-thumb {
+  background-color: var(--numi-line);
+  border-radius: 99px;
+}

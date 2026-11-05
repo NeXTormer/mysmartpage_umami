@@ -13,6 +13,11 @@ export function ShareBranding({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
   const logoImage = share?.whiteLabel?.logoUrl;
   const height = LOGO_SIZE[size];
 
+  // NUMI build: no Umami branding unless the share sets its own white-label.
+  if (!share?.whiteLabel) {
+    return null;
+  }
+
   return (
     <a href={logoDomain} target="_blank" rel="noopener" style={{ marginLeft: 12 }}>
       <Row alignItems="center" gap>
