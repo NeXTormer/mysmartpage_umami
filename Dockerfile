@@ -1,10 +1,15 @@
 ARG NODE_IMAGE_VERSION="22.23.4-alpine"
-ARG PNPM_VERSION="12.3.4"
+# pnpm 12 ships a native Rust binary that crashes under QEMU (x86 builds on Apple Silicon
+# without Rosetta); pnpm 10 is plain JS. package.json declares engines.pnpm 12.x, which
+# pnpm 10 refuses, so the node -e lines below remove it inside the image only.
+ARG PNPM_VERSION="10"
 # Keep in sync with the prisma/@prisma/* versions in package.json
 ARG PRISMA_VERSION="7.10.0"
 
 # Install dependencies only when needed
-FROM node:${NODE_IMAGE_VERSION} AS deps
+# deps + builder run on the build host's native architecture (no QEMU: esbuild/Turbopack crash
+# under emulation). Only the runner stage uses the target platform.
+FROM --platform=$BUILDPLATFORM node:${NODE_IMAGE_VERSION} AS deps
 ARG PNPM_VERSION
 
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
@@ -15,14 +20,19 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY packages/api-client/package.json ./packages/api-client/
 COPY packages/mcp/package.json ./packages/mcp/
 COPY packages/mcp/bin ./packages/mcp/bin/
+RUN node -e "const f=require('fs'),p=JSON.parse(f.readFileSync('package.json'));delete (p.engines||{}).pnpm;f.writeFileSync('package.json',JSON.stringify(p,null,2))"
 RUN npm install -g pnpm@${PNPM_VERSION}
 
-RUN printf 'strictDepBuilds: false\n' >> pnpm-workspace.yaml
+# Also fetch the target platform's native optional deps (sharp etc.): the build runs on the host's
+# architecture, but .next/standalone must work on the target one.
+ARG TARGETARCH
+RUN TARGET_CPU=$([ "$TARGETARCH" = "amd64" ] && echo x64 || echo "$TARGETARCH") \
+    && printf 'strictDepBuilds: false\nsupportedArchitectures:\n  os: [current]\n  cpu: [current, %s]\n  libc: [current, musl]\n' "$TARGET_CPU" >> pnpm-workspace.yaml
 
 RUN pnpm install --frozen-lockfile
 
 # Rebuild the source code only when needed
-FROM node:${NODE_IMAGE_VERSION} AS builder
+FROM --platform=$BUILDPLATFORM node:${NODE_IMAGE_VERSION} AS builder
 ARG PNPM_VERSION
 WORKDIR /app
 # build:openapi shells out to pnpm, so the builder stage needs it too
@@ -31,18 +41,22 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/packages/api-client/node_modules ./packages/api-client/node_modules
 COPY --from=deps /app/packages/mcp/node_modules ./packages/mcp/node_modules
 COPY . .
+RUN node -e "const f=require('fs'),p=JSON.parse(f.readFileSync('package.json'));delete (p.engines||{}).pnpm;f.writeFileSync('package.json',JSON.stringify(p,null,2))"
 COPY docker/proxy.ts ./src
 
 ARG BASE_PATH
 
 ENV BASE_PATH=$BASE_PATH
 ENV NEXT_TELEMETRY_DISABLED=1
+# One page-data worker: three parallel ones get OOM-killed in Docker Desktop's default VM.
+ENV NEXT_BUILD_CPUS=1
 ENV DATABASE_URL="postgresql://user:pass@localhost:5432/dummy"
 
 ARG SKIP_BUILD_GEO
 ENV SKIP_BUILD_GEO=$SKIP_BUILD_GEO
 
-RUN pnpm build:docker
+# pnpm/npm-run-all can report success when Next is OOM-killed, so assert the output exists.
+RUN pnpm build:docker && test -f .next/standalone/server.js
 
 # Production image, copy all the files and run next
 FROM node:${NODE_IMAGE_VERSION} AS runner

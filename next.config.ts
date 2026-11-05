@@ -229,6 +229,8 @@ export default withNextIntl({
   },
   experimental: {
     useTypeScriptCli: true,
+    // Docker on small VMs: parallel page-data workers get OOM-killed. Set NEXT_BUILD_CPUS=1.
+    cpus: process.env.NEXT_BUILD_CPUS ? Number(process.env.NEXT_BUILD_CPUS) : undefined,
   },
   async headers() {
     return headers;
