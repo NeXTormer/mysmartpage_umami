@@ -153,8 +153,8 @@ describe('SharePage', () => {
       { route: '/share/slug/events' },
     );
 
-    expect(screen.getAllByText('share nav')).toHaveLength(2);
-    expect(screen.getByText('website header')).toBeInTheDocument();
+    expect(screen.queryByText('share nav')).not.toBeInTheDocument();
+    expect(screen.queryByText('website header')).not.toBeInTheDocument();
     expect(screen.getByText('events page')).toBeInTheDocument();
     expect(initTheme).toHaveBeenCalled();
   });

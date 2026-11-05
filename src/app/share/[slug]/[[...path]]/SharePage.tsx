@@ -1,7 +1,7 @@
 'use client';
-import { Column, Grid, Row, useTheme } from '@umami/react-zen';
+import { Column, useTheme } from '@umami/react-zen';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { BoardViewPage } from '@/app/(main)/boards/[boardId]/BoardViewPage';
 import { LinkPage } from '@/app/(main)/links/[linkId]/LinkPage';
 import { PixelPage } from '@/app/(main)/pixels/[pixelId]/PixelPage';
@@ -18,16 +18,13 @@ import { ComparePage } from '@/app/(main)/websites/[websiteId]/compare/ComparePa
 import { EventsPage } from '@/app/(main)/websites/[websiteId]/events/EventsPage';
 import { RealtimePage } from '@/app/(main)/websites/[websiteId]/realtime/RealtimePage';
 import { SessionsPage } from '@/app/(main)/websites/[websiteId]/sessions/SessionsPage';
-import { WebsiteHeader } from '@/app/(main)/websites/[websiteId]/WebsiteHeader';
 import { WebsitePage } from '@/app/(main)/websites/[websiteId]/WebsitePage';
 import { WebsiteProvider } from '@/app/(main)/websites/WebsiteProvider';
 import { PageBody } from '@/components/common/PageBody';
 import { useShare } from '@/components/hooks';
-import { MobileMenuButton } from '@/components/input/MobileMenuButton';
 import { ENTITY_TYPE } from '@/lib/constants';
 import { getShareTheme } from '@/lib/share';
 import { ShareFooter } from './ShareFooter';
-import { ShareNav } from './ShareNav';
 
 const PAGE_COMPONENTS: Record<string, React.ComponentType<{ websiteId: string }>> = {
   '': WebsitePage,
@@ -60,14 +57,6 @@ function getSharePath(pathname: string) {
 }
 
 export function SharePage() {
-  const [navCollapsed, setNavCollapsed] = useState(
-    () => typeof window !== 'undefined' && localStorage.getItem('share:navCollapsed') === 'true',
-  );
-
-  const handleCollapse = (value: boolean) => {
-    localStorage.setItem('share:navCollapsed', String(value));
-    setNavCollapsed(value);
-  };
   const share = useShare();
   const { initTheme } = useTheme();
   const router = useRouter();
@@ -119,25 +108,10 @@ export function SharePage() {
   const PageComponent = PAGE_COMPONENTS[pageKey] || WebsitePage;
 
   return (
-    <Grid columns={{ base: '1fr', lg: `${navCollapsed ? '60px' : '240px'} 1fr` }} width="100%">
-      <Row display={{ base: 'flex', lg: 'none' }} alignItems="center" gap padding="3">
-        <MobileMenuButton>
-          {({ close }) => {
-            return <ShareNav onItemClick={close} />;
-          }}
-        </MobileMenuButton>
-      </Row>
-      <Column display={{ base: 'none', lg: 'flex' }} marginRight="2">
-        <ShareNav collapsed={navCollapsed} onCollapse={handleCollapse} />
-      </Column>
-      <PageBody gap>
-        <WebsiteProvider websiteId={websiteId}>
-          <Column>
-            <WebsiteHeader showActions={false} allowLink={false} />
-            <PageComponent websiteId={websiteId} />
-          </Column>
-        </WebsiteProvider>
-      </PageBody>
-    </Grid>
+    <PageBody gap>
+      <WebsiteProvider websiteId={websiteId}>
+        <PageComponent websiteId={websiteId} />
+      </WebsiteProvider>
+    </PageBody>
   );
 }
