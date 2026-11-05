@@ -9,7 +9,6 @@ export function PageHeader({
   icon,
   showBorder = true,
   titleHref,
-  marginBottom = '6',
   children,
 }: {
   title: string;
@@ -20,14 +19,13 @@ export function PageHeader({
   titleHref?: string;
   allowEdit?: boolean;
   className?: string;
-  marginBottom?: string;
   children?: ReactNode;
 }) {
   return (
     <Grid
-      columns={{ xs: '1fr', md: '1fr 1fr' }}
+      columns={{ base: '1fr', md: '1fr 1fr' }}
       paddingY="6"
-      marginBottom={marginBottom}
+      marginBottom="6"
       border={showBorder ? 'bottom' : undefined}
     >
       <Column gap="2">
@@ -40,10 +38,10 @@ export function PageHeader({
           )}
           {title && titleHref ? (
             <LinkButton href={titleHref} variant="quiet">
-              <Heading size={{ xs: '2', md: '3', lg: '4' }}>{title}</Heading>
+              <Heading size={{ base: 'lg', md: '2xl', lg: '3xl' }}>{title}</Heading>
             </LinkButton>
           ) : (
-            title && <Heading size={{ xs: '2', md: '3', lg: '4' }}>{title}</Heading>
+            title && <Heading size={{ base: 'lg', md: '2xl', lg: '3xl' }}>{title}</Heading>
           )}
         </Row>
         {description && (

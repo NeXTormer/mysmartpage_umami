@@ -7,12 +7,11 @@ import { getDateRangeValue } from '@/lib/date';
 import { DateFilter } from './DateFilter';
 
 export interface WebsiteDateFilterProps {
-  websiteId: string;
+  websiteId?: string;
   compare?: string;
   showAllTime?: boolean;
   showButtons?: boolean;
   allowCompare?: boolean;
-  style?: React.CSSProperties;
 }
 
 export function WebsiteDateFilter({
@@ -20,10 +19,9 @@ export function WebsiteDateFilter({
   showAllTime = true,
   showButtons = true,
   allowCompare,
-  style,
 }: WebsiteDateFilterProps) {
   const { dateRange, isAllTime, isCustomRange } = useDateRange();
-  const { formatMessage, labels } = useMessages();
+  const { t, labels } = useMessages();
   const {
     router,
     updateParams,
@@ -33,17 +31,20 @@ export function WebsiteDateFilter({
   const showCompare = allowCompare && !isAllTime;
 
   const websiteDateRange = useDateRangeQuery(websiteId);
+  const { startDate, endDate } = websiteDateRange;
+  const hasData = startDate && endDate;
 
   const handleChange = (date: string) => {
-    if (date === 'all') {
+    if (date === 'all' && hasData) {
       router.push(
         updateParams({
           date: `${getDateRangeValue(websiteDateRange.startDate, websiteDateRange.endDate)}:all`,
           offset: undefined,
+          page: 1,
         }),
       );
     } else {
-      router.push(updateParams({ date, offset: undefined }));
+      router.push(updateParams({ date, offset: undefined, unit: undefined, page: 1 }));
     }
   };
 
@@ -64,32 +65,25 @@ export function WebsiteDateFilter({
     <Row wrap="wrap" gap>
       {showButtons && !isAllTime && !isCustomRange && (
         <Row gap="1">
-          <Button onPress={() => handleIncrement(-1)} variant="outline" style={style}>
+          <Button onPress={() => handleIncrement(-1)} variant="outline">
             <Icon rotate={180}>
               <ChevronRight />
             </Icon>
           </Button>
-          <Button
-            onPress={() => handleIncrement(1)}
-            variant="outline"
-            isDisabled={disableForward}
-            style={style}
-          >
+          <Button onPress={() => handleIncrement(1)} variant="outline" isDisabled={disableForward}>
             <Icon>
               <ChevronRight />
             </Icon>
           </Button>
         </Row>
       )}
-      <Row minWidth="200px">
-        <DateFilter
-          value={dateValue}
-          onChange={handleChange}
-          showAllTime={showAllTime}
-          renderDate={+offset !== 0}
-          style={style}
-        />
-      </Row>
+      <DateFilter
+        className="min-w-[200px]"
+        value={dateValue}
+        onChange={handleChange}
+        showAllTime={hasData && showAllTime}
+        renderDate={+offset !== 0}
+      />
       {showCompare && (
         <Row alignItems="center" gap>
           <Text weight="bold">VS</Text>
@@ -97,10 +91,11 @@ export function WebsiteDateFilter({
             <Select
               value={compare}
               onChange={handleSelect}
+              buttonProps={{ style: { width: 200 } }}
               popoverProps={{ style: { width: 200 } }}
             >
-              <ListItem id="prev">{formatMessage(labels.previousPeriod)}</ListItem>
-              <ListItem id="yoy">{formatMessage(labels.previousYear)}</ListItem>
+              <ListItem id="prev">{t(labels.previousPeriod)}</ListItem>
+              <ListItem id="yoy">{t(labels.previousYear)}</ListItem>
             </Select>
           </Row>
         </Row>
