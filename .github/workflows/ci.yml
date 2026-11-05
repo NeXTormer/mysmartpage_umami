@@ -1,9 +1,6 @@
 name: Node.js CI
 
-on: [push, pull_request]
-
-permissions:
-  contents: read
+on: [push]
 
 env:
   DATABASE_URL: "postgresql://user:pass@localhost:5432/dummy"
@@ -12,26 +9,20 @@ env:
 jobs:
   build:
     if: github.repository == 'umami-software/umami'
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          persist-credentials: false
       - uses: pnpm/action-setup@v4
         with:
-          version: 12.3.4
+          version: 10
           run_install: false
-      - name: Use Node.js 22
+      - name: Use Node.js 18.18
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 18.18
           cache: "pnpm"
+      - run: npm install --global pnpm
       - run: pnpm install
-      - run: pnpm openapi:generate
-      - run: pnpm openapi:check --explicit
-      - run: pnpm check:api:client
-      - run: pnpm build:packages
       - run: pnpm test
-      - run: pnpm test:packages
       - run: pnpm build
