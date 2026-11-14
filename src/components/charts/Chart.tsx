@@ -15,11 +15,9 @@ import { Legend } from '@/components/metrics/Legend';
 import { getChartBucketIndex } from '@/lib/charts';
 import { DEFAULT_ANIMATION_DURATION } from '@/lib/constants';
 
-// Share pages use the platform font (numi-web look); the app uses Space Grotesk.
+// NUMI: platform font, same as the UI text (see app/numi.css).
 ChartJS.defaults.font.family =
-  typeof window !== 'undefined' && window.location.pathname.startsWith('/share/')
-    ? 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif'
-    : 'Space Grotesk';
+  'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif';
 
 export interface ChartProps extends BoxProps {
   type?: 'bar' | 'bubble' | 'doughnut' | 'pie' | 'line' | 'polarArea' | 'radar' | 'scatter';

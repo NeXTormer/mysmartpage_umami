@@ -1,5 +1,4 @@
 import { ShareProvider } from '@/app/share/ShareProvider';
-import '@/app/share/share.css';
 
 export default async function ({
   params,
@@ -10,9 +9,5 @@ export default async function ({
 }) {
   const { slug } = await params;
 
-  return (
-    <ShareProvider slug={slug}>
-      <div className="numi-share">{children}</div>
-    </ShareProvider>
-  );
+  return <ShareProvider slug={slug}>{children}</ShareProvider>;
 }

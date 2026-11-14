@@ -21,8 +21,8 @@ export const HOMEPAGE_URL = 'https://umami.is';
 export const DOCS_URL = 'https://umami.is/docs';
 export const REPO_URL = 'https://github.com/umami-software/umami';
 export const UPDATES_URL = 'https://api.umami.is/v1/updates';
-export const TELEMETRY_PIXEL = 'https://i.umami.is/a.png';
-export const FAVICON_URL = 'https://icons.duckduckgo.com/ip3/{{domain}}.ico';
+// NUMI build: served by app/favicons/[domain]/route.ts, never fetched from a third party in the browser.
+export const FAVICON_URL = `${process.env.basePath || ''}/favicons/{{domain}}`;
 export const LINKS_URL = `${globalThis?.location?.origin}/q`;
 export const PIXELS_URL = `${globalThis?.location?.origin}/p`;
 
@@ -243,7 +243,7 @@ export const THEME_COLORS = {
   light: {
     primary: '#0047FF',
     text: '#838383',
-    line: '#000000',
+    line: '#e6eaf2',
     fill: '#F4F4F5',
   },
   dark: {

@@ -1,15 +1,4 @@
-:root {
-  --zen-font-family: 'Space Grotesk', var(--font-inter), sans-serif;
-}
-
-/* Preserve the brand accent when Zen applies its light or dark theme tokens. */
-:root,
-[data-theme="light"],
-[data-theme="dark"],
-.dark {
-  --zen-primary: #0047ff;
-  --zen-primary-fg: #ffffff;
-}
+/* NUMI colours, fonts and shapes live in numi.css. */
 
 /* Zen's rem-based typography and spacing assume the browser's default root size. */
 html {
@@ -20,7 +9,6 @@ html,
 body {
   font-family: var(--zen-font-family), sans-serif;
   color: var(--zen-fg);
-  background-color: #f4f4f5;
   width: 100%;
   min-height: 100vh;
 }
@@ -117,19 +105,4 @@ select:is(:-webkit-autofill, :autofill):focus {
     margin: 0 4px;
     font-size: 12px;
   }
-}
-
-/* NUMI neobrutalist theme (switched off on share pages, see share/share.css) */
-html:not(:has(.numi-share)) * {
-  border-radius: 0 !important;
-  font-family: 'Space Grotesk', sans-serif;
-}
-
-html:not(:has(.numi-share)) :is(button, input, select, textarea, [class*="card" i], [class*="panel" i]) {
-  border-color: #000000 !important;
-}
-
-html:not(:has(.numi-share)) :is(button, input, select, textarea) {
-  border-width: 2px !important;
-  box-shadow: 4px 4px 0 0 #000000 !important;
 }

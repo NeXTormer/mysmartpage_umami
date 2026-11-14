@@ -1,7 +1,6 @@
 export * from '@/app/(main)/settings/preferences/LanguageSetting';
 export * from '@/app/(main)/settings/preferences/PreferenceSettings';
 export * from '@/app/(main)/settings/preferences/PreferencesPage';
-export * from '@/app/(main)/settings/preferences/ThemeSetting';
 export * from '@/app/(main)/teams/[teamId]/TeamDeleteForm';
 export * from '@/app/(main)/teams/[teamId]/TeamEditForm';
 export * from '@/app/(main)/teams/[teamId]/TeamManage';

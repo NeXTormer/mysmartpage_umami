@@ -1,6 +1,5 @@
 import { FlagValues as FlagValuesScript } from 'flags/react';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { headers } from 'next/headers';
 import { connection } from 'next/server';
 import { Suspense } from 'react';
@@ -10,12 +9,7 @@ import { getBaseUrl } from '@/lib/get-base-url';
 import { Providers } from './Providers';
 import '@umami/react-zen/styles.full.css';
 import './global.css';
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-});
+import './numi.css';
 
 export default async function ({ children }) {
   if (process.env.DISABLE_UI) {
@@ -33,7 +27,7 @@ export default async function ({ children }) {
   const flags = await getFlagValues();
 
   return (
-    <html lang="en" className={`${inter.className} ${inter.variable}`}>
+    <html lang="en">
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -41,11 +35,12 @@ export default async function ({ children }) {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="manifest" href="/site.webmanifest" crossOrigin="use-credentials" />
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
+          rel="preload"
+          href="/fonts/martian-grotesk.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
         />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />

@@ -1,24 +1,30 @@
 /*
- * Share page styling, matched to numi-web's soft NUMI look instead of the
- * app-wide neobrutalist theme in global.css. Everything is scoped to
- * .numi-share (set in share/[slug]/layout.tsx); global.css switches its
- * neobrutalist rules off whenever a .numi-share element is on the page.
- * Tokens mirror numi-web/src/app.css.
+ * NUMI look for the whole Umami UI, matched to numi-web (numi-web/src/app.css):
+ * soft blue-grey background, white cards with 1px line border + 20px radius,
+ * 12px controls, platform font for UI text and Martian Grotesk for headings.
+ * Loaded after React Zen's stylesheet (see app/layout.tsx), so the token
+ * overrides below win over Zen's own light/dark tokens.
+ *
+ * Martian Grotesk is self-hosted from public/fonts (same file numi.at serves);
+ * nothing here may load fonts/CSS/JS from another origin.
  */
 @font-face {
-  font-family: 'Martian Grotesk';
+  font-family: "Martian Grotesk";
   font-style: normal;
   font-weight: 100 800;
   font-display: swap;
-  src: url('/fonts/martian-grotesk.woff2') format('woff2');
+  src: url("/fonts/martian-grotesk.woff2") format("woff2");
 }
 
-html:has(.numi-share),
-html:has(.numi-share) body {
+html,
+body {
   background-color: #f6f8fc;
 }
 
-.numi-share {
+html,
+[data-theme="light"],
+[data-theme="dark"],
+.dark {
   --numi-brand: #0047ff;
   --numi-brand-soft: #eaf0ff;
   --numi-ink: #0f172a;
@@ -30,8 +36,8 @@ html:has(.numi-share) body {
   --numi-shadow-card: 0 8px 20px -12px rgba(15, 23, 42, 0.22);
 
   /* Re-point React Zen's tokens at the NUMI palette. */
-  --zen-font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
-    Arial, sans-serif;
+  --zen-font-family:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --zen-primary: var(--numi-brand);
   --zen-primary-fg: #ffffff;
   --zen-fg: var(--numi-ink);
@@ -45,28 +51,29 @@ html:has(.numi-share) body {
   --zen-radius: var(--numi-radius-control);
   --zen-focus-ring: var(--numi-brand);
 
-  min-height: 100vh;
-  background-color: var(--numi-alt);
+  --numi-font-brand: "Martian Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
   color: var(--numi-ink);
-  font-family: var(--zen-font-family);
   -webkit-font-smoothing: antialiased;
 }
 
-.numi-share h1,
-.numi-share h2,
-.numi-share h3,
-.numi-share h4,
-.numi-share h5,
-.numi-share h6 {
-  font-family: 'Martian Grotesk', ui-sans-serif, system-ui, sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--numi-font-brand);
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.1;
 }
 
 /* Cards and panels: white, 1px line border, 20px radius, soft shadow. */
-.numi-share [class*='panel' i],
-.numi-share [class*='card' i] {
+[class*="panel" i],
+[class*="card" i] {
   background-color: #ffffff;
   border: 1px solid var(--numi-line);
   border-radius: var(--numi-radius-card);
@@ -74,27 +81,27 @@ html:has(.numi-share) body {
 }
 
 /* Controls: 12px radius, line border, no hard shadow. */
-.numi-share button,
-.numi-share input,
-.numi-share select,
-.numi-share textarea {
+button,
+input,
+select,
+textarea {
   border-radius: var(--numi-radius-control);
   box-shadow: none;
 }
 
-.numi-share button:hover {
+button:hover {
   border-color: var(--numi-brand);
 }
 
-.numi-share button:focus-visible,
-.numi-share input:focus-visible,
-.numi-share select:focus-visible {
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
   outline: none;
   border-color: var(--numi-brand);
   box-shadow: 0 0 0 4px rgba(0, 71, 255, 0.1);
 }
 
-.numi-share ::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: var(--numi-line);
   border-radius: 99px;
 }

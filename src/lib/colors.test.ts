@@ -60,8 +60,8 @@ describe('getThemeColors', () => {
   test('builds a color structure for the light theme', () => {
     const result = getThemeColors('light');
 
-    expect(result.colors.theme).toMatchObject({ primary: '#2680eb' });
-    expect(result.colors.map.baseColor).toBe('#2680eb');
+    expect(result.colors.theme).toMatchObject({ primary: '#0047FF' });
+    expect(result.colors.map.baseColor).toBe('#0047FF');
     expect(result.colors.chart.views.backgroundColor).toContain('rgba');
     expect(result.colors.chart.text).toBeDefined();
   });
